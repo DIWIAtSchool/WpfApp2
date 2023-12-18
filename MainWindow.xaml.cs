@@ -26,7 +26,7 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<StarWarsPeople> StarWarsPeoples { get; set; }
+        //private ObservableCollection<StarWarsPeople> StarWarsPeoples { get; set; }
 
         public MainWindow()
         {
@@ -207,13 +207,12 @@ namespace WpfApp2
                 // ...und setze den neuen Next-Zeiger
                 peopleList.Next = tempList?.Next;
             }
-            StarWarsPeoples = new();
+            ObservableCollection<StarWarsPeople> StarWarsPeoples = new();
             // Alle "people" zur ListBox hinzufügen
             if (peopleList?.Peoples is not null)
             {
                 foreach (StarWarsPeople p in peopleList.Peoples)
                 {
-                    //lstNames.Items.Add(p.Name);
                     StarWarsPeoples.Add(p);
                 }
             }
@@ -231,6 +230,7 @@ namespace WpfApp2
             //make the request
             var task = client.SendAsync(requestMessage);
             var response = task.Result;
+            // Achtung: Die folgende Zeile wirft eine Exception, wenn der Http-Status-Code nicht 200 Ok ist.
             HttpResponseMessage msg = response.EnsureSuccessStatusCode();
             string responseBody = response.Content.ReadAsStringAsync().Result;
             //MessageBox.Show(responseBody);
